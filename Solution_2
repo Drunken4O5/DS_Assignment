@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+#importing the dataset on the kaggle's notebook
 import os
 for dirname, _, filenames in os.walk('/kaggle/input'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
+
+data = pd.read_csv('/kaggle/input/road-accident-dataset/Road Accident Data.csv')
