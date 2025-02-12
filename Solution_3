@@ -10,3 +10,37 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
         print(os.path.join(dirname, filename))
 
 data = pd.read_csv('/kaggle/input/road-accident-dataset/Road Accident Data.csv')
+
+# Bar graph for accident severity
+plt.figure(figsize=(9,6))
+Accident_seri = data['Accident_Severity'].value_counts()
+sns.barplot(x=Accident_seri.index, y=Accident_seri.values, palette='Reds')
+plt.title('Seriouness of Accident')
+plt.xlabel('Accident Severity')
+plt.ylabel('NUmber of Accident')
+plt.xticks(rotation=30)
+plt.show()
+
+# Percentage distribution
+Accident_seri = data['Accident_Severity'].value_counts()
+# Convert counts to percentages
+Accident_percentage = (Accident_seri / Accident_seri.sum()) * 100
+# Define colors for better visualization
+colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99']
+plt.figure(figsize=(8, 8))
+plt.pie(Accident_percentage, labels=Accident_percentage.index, autopct='%1.1f%%',colors=colors)
+plt.title('Accident Severity Distribution', fontsize=14)
+plt.show()
+
+#Severity v/s other factors
+severity_by_time_weather = data.groupby(['Time', 'Weather_Conditions'])['Accident_Severity'].count().reset_index()  
+pivot_table = severity_by_time_weather.pivot(index='Time', columns='Weather_Conditions', values='Accident_Severity')
+plt.figure(figsize=(14, 10))       
+pivot_table.plot(kind='bar', stacked=True, cmap='coolwarm', width=0.8, alpha=0.85)
+plt.title("Accident Severity by other factors")
+plt.xlabel("Hour of the Day", fontsize=12)
+plt.ylabel("Number of Accidents", fontsize=12)
+plt.xticks(rotation=0)
+plt.legend(title="Weather Condition", bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.grid(axis="y", linestyle="--", alpha=0.7)
+plt.show()
