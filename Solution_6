@@ -1,0 +1,30 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#importing the dataset on the kaggle's notebook
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+data = pd.read_csv('/kaggle/input/road-accident-dataset/Road Accident Data.csv')
+
+# Type of Vehicles invovled in accidents
+vehicle_counts = data['Vehicle_Type'].value_counts()
+plt.figure(figsize=(12, 10))
+sns.barplot(x=vehicle_counts.index, y=vehicle_counts.values)
+plt.title("Accidents by Vehicle Type")
+plt.xlabel("Vehicle Type")
+plt.ylabel("Number of Accidents")
+plt.xticks(rotation=65)
+plt.grid(axis='y', linestyle="--", alpha=0.64)
+
+# Relation between accident severity and vehivle type
+severity_vehicle_counts = data.groupby(['Vehicle_Type','Accident_Severity']).size().unstack()
+sns.heatmap(severity_vehicle_counts, annot=True, cmap="coolwarm")
+plt.title("Heatmap of Accident Severity by Vehicle Type", fontsize=14)
+plt.xlabel("Accident Severity", fontsize=12)
+plt.ylabel("Vehicle Type", fontsize=12)
+plt.show()
