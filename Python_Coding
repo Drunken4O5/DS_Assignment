@@ -1,0 +1,107 @@
+
+import numpy as np
+from sympy import Matrix
+from sympy import symbols, solve
+import pandas as pd 
+
+''' A=[[1,2,3]
+    [9,8,7]
+    [10,21,32]] '''
+A = np.array([[1,2,3],[9,8,7],[10,21,32]])
+''' B=[[4,5,6]
+    [9,1,10]
+    [11,23,46]] '''
+B = np.array([[4,5,6],[9,1,10],[11,23,46]])
+
+# Addition of Matrices
+Add = np.add(A,B)
+print('Addition of A and B is')
+print(Add)
+
+# Subraction of Matrices
+Sub1 = np.subtract(A,B)
+Sub2 = np.subtract(B,A)
+print('Subtraction of A-B is')
+print(Sub1)
+
+print('Subtraction of B-A is')
+print(Sub2)
+# Element-wise multiplication
+Mul = np.multiply(A,B)
+print('Element-wise Multiplication of A and B is')
+print(Mul)
+
+# Matrice Multiplication
+# Can alos use M1 = A@B | M2 = B@A
+Mat_mul1 = np.matmul(A,B)
+Mat_mul2 = np.matmul(B,A)
+print('Multiplication of A and b is')
+print(Mat_mul1)
+
+print('Multiplication of B and A is')
+print(Mat_mul2)
+
+# Determinant of Matrices
+Det1 = np.linalg.det(A)
+Det2 = np.linalg.det(B)
+print('Determinant value of A is')
+print(Det1)
+
+print('Determinant value of B is')
+print(Det2)
+
+# Inverse of Matrices
+inv1 = np.linalg.inv(A)
+inv2 = np.linalg.inv(B)
+print('Inverse of A is')
+print(inv1)
+
+print('Inverse of B is')
+print(inv2)
+
+# Eigenvalue and Eigenvector
+E1 = np.linalg.eig(A)
+E2 = np.linalg.eig(B)
+print('Eigenvalue and Eigenvecotr of A is')
+print(E1)
+
+print('Eigenvalue and Eigenvector of B is')
+print(E2)
+
+# Basis Calculation
+
+# Converting to a sympy matrix and compute row echelon form
+m1 = Matrix(A)
+m2 = Matrix(B)
+rref_mat1, pivots1 = m1.rref()
+rref_mat2, pivots2 = m2.rref()
+
+# Extraction of basis vector
+basis_vector1 = m1[pivots1, :]
+basis_vector2 = m2[pivots2, :]
+print('Basis vector of A')
+print(basis_vector1)
+print('Basis vector of B')
+print(basis_vector2)
+
+# Span Calculation
+
+# Target Vector
+v = np.random.randint(1,100,(3,3))
+
+c1, c2 = symbols('c1', 'c2')
+eq1 = A.T * Matrix([c1,c2]) - v
+eq2 = B.T * Matrix([c1,c2]) - v
+
+sol1 = solve(eq1, (c1, c2))
+sol2 = solve(eq2, (c1, c2))
+
+if sol1:
+    print(f'The vector is in the span with coefficients: {sol1}')
+else:
+    print('Vector is not in the spa set')
+
+if sol2:
+    print(f'The vector is in the span with coefficients: {sol2}')
+else:
+    print('Vector is not in the spa set')
