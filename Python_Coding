@@ -86,22 +86,16 @@ print(basis_vector2)
 
 # Span Calculation
 
+C = Matrix([[1,2,3],[5,6,7]])
 # Target Vector
-v = np.random.randint(1,100,(3,3))
+v = Matrix([15,27,23])
 
-c1, c2 = symbols('c1', 'c2')
-eq1 = A.T * Matrix([c1,c2]) - v
-eq2 = B.T * Matrix([c1,c2]) - v
+c1, c2 = symbols('c1 c2')
+eqs = C.T * Matrix([c1,c2]) - v
 
-sol1 = solve(eq1, (c1, c2))
-sol2 = solve(eq2, (c1, c2))
+sols = solve(eqs, (c1, c2))
 
-if sol1:
-    print(f'The vector is in the span with coefficients: {sol1}')
+if sols:
+    print(f'The vector is in the span with coefficients: {sols}')
 else:
-    print('Vector is not in the spa set')
-
-if sol2:
-    print(f'The vector is in the span with coefficients: {sol2}')
-else:
-    print('Vector is not in the spa set')
+    print('Vector is not in the span set')
